@@ -1,0 +1,19 @@
+RECOMMENDATIONS CONCERNING COMPATIBLE METAFILE FORMATS
+
+
+1) Do not use placeable, clipboard, or extended metafiles,
+   simply use the Windows Metafile Format with original header.
+2) When constructing the file, use only the older, 16 bit
+   Windows GDI calls.
+3) When constructing the file, be sure to set mapping mode 
+   to anisotropic.
+4) When constructing the file, be sure to set maximum x and
+   y extents.
+5) Highly recommend no more than one each of pen, font, text,
+   text color, and background open at any given moment.
+
+
+A sample metafile known to be working, fulltest.wmf, was taken 
+from the open source libwmf project.  The placeable header
+was stripped away from this to make a windows metafile having
+only the original header.

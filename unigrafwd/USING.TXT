@@ -1,0 +1,167 @@
+USING THE UNIVERSAL GRAPHICS IMPORT FILTER
+
+1) Build and register a COM EXE Server with the following characteristics:
+
+   (NOTE:  A trivial test server has been designed for you, see
+    Test\Test.dsw.  The build process for that server will perform
+	automatic registration).
+
+   Progid:		Unigrafwd.Server
+
+   Methods:		Convert
+				-------
+
+				Arguments:
+
+						Type		Suggested Name		Purpose
+						----		--------------		-------
+						VT_BSTR		Path				Path of file to be converted
+
+						VT_BSTR		Scrap				Filter wants 16-bit Windows metafile
+														data to be stored in this path
+						
+						VT_I4		Resolution			Resolution of resulting metafile in pixels per inch
+														suggested by filter.   Your server
+														may choose differently. 
+
+						VT_I4		Top					Top coordinate of resulting metafile
+														clipping rectangle suggested by filter.   
+														Your server may choose differently.
+
+						VT_I4		Left				Left coordinate
+
+						VT_I4		Bottom				Bottom coordinate
+
+						VT_I4		Right				Right coordinate
+
+				Result:
+
+						VT_I4							Status of conversion.  Zero for
+														success, non-zero otherwise.
+
+
+
+				Top
+				---
+
+				Arguments:
+
+						None
+
+				Result:
+
+						VT_I4							Server's idea of the top coordinate
+														of resulting metafile clipping rectangle.
+														Ignored when value < 0
+
+				Left
+				----
+
+				Arguments:
+
+						None
+
+				Result:
+
+						VT_I4							Server's idea of the left coordinate
+														of resulting metafile clipping rectangle.
+														Ignored when value < 0
+
+				Bottom
+				------
+
+				Arguments:
+
+						None
+
+				Result:
+
+						VT_I4							Server's idea of the bottom coordinate
+														of resulting metafile clipping rectangle.
+														Ignored when value <= 0
+
+				Right
+				-----
+
+				Arguments:
+
+						None
+
+				Result:
+
+						VT_I4							Server's idea of the bottom coordinate
+														of resulting metafile clipping rectangle.
+														Ignored when value <= 0
+
+				Resolution
+				----------
+
+				Arguments:
+
+						None
+
+				Result:
+
+						VT_I4							Server's idea of the resolution
+														of resulting metafile.
+														Ignored when value <= 0
+
+				Cleanup
+				-------
+
+				Arguments:
+
+						VT_BSTR		Scrap				Path of the scrap file that
+														filter wants server to delete.
+
+														The filter cannot do it, as 
+														the thread belonging to Word 
+														appears to be closed off from 
+														normal file IO operations.
+
+
+2) Calling sequence of server by filter:
+
+   status = Convert    (Path, Scrap, Resolution, Top, Left, Bottom, Right)
+   number = Resolution ()
+   number = Top        ()
+   number = Left       ()
+   number = Bottom     ()
+   number = Right      ()
+   status = Cleanup    (Scrap)
+
+
+
+3) General filter/server interaction:
+
+   a) User attempts to insert a picture from file into Word document,
+      or Word encounters a link to a file.
+
+   b) Word calls correct filter for file type (by extension)
+
+   c) This filter passes the path of the file to be converted, the path
+      of the scrap file that filter expects the server to save results to,
+	  and suggestions for resolution and clipping rectangle.
+
+   d) The server will either construct the file and return a zero status
+	  for success, or find some problem and return a nonzero status.
+
+   e) The filter will fail upon encountering a nonzero status from the
+      server, preventing Word from performing the picture insertion.
+
+   f) The filter will call the server's methods for suggestions by the
+      server on what the actual resolution and clipping rectangle actually was.
+
+   g) The filter will copy the scrap into a memory handle for forwarding
+      to Word.
+
+   h) The filter will call the server to request that the server delete the
+      scrap.
+
+   i) The filter will forward to Word the metafile memory handle along with 
+      clipping rectangle and resolution.
+
+   j) Word will insert the image contained by the metafile memory handle.
+
+
+

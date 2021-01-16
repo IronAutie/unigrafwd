@@ -1,0 +1,9 @@
+LIBRARY   unigrafwd
+DESCRIPTION "Universal Import Graphic Filter for Word"
+EXPORTS
+	GetFilterInfo	@1
+	SetFilterPref	@2
+	ImportGr	@3	
+	ExportGr	@4
+
+

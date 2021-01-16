@@ -1,0 +1,24 @@
+HKCR
+{
+	Unigrafwd.Server.1 = s 'unigrafwd Class'
+	{
+		CLSID = s '{29EAFE44-6650-4AC3-9772-B29C821CD6F7}'
+	}
+	Unigrafwd.Server = s 'unigrafwd Class'
+	{
+		CLSID = s '{29EAFE44-6650-4AC3-9772-B29C821CD6F7}'
+		CurVer = s 'Unigrafwd.Server.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {29EAFE44-6650-4AC3-9772-B29C821CD6F7} = s 'unigrafwd Class'
+		{
+			ProgID = s 'Unigrafwd.Server.1'
+			VersionIndependentProgID = s 'Unigrafwd.Server'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{4B9E14F1-5624-40B8-BEC5-19303E8BAEFD}'
+			'TypeLib' = s '{B5679FC4-1605-4726-8202-8611C59456D2}'
+		}
+	}
+}

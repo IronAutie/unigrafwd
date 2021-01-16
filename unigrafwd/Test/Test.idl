@@ -1,0 +1,45 @@
+// Test.idl : IDL source for Test.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (Test.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(8D4B6860-170B-4A58-B2B5-8097A861544D),
+		dual,
+		helpstring("Iunigrafwd Interface"),
+		pointer_default(unique)
+	]
+	interface Iunigrafwd : IDispatch
+	{
+		[id(1), helpstring("method Convert")] HRESULT Convert([in] BSTR path, [in] BSTR scrap, [in] long resolution, [in] long top, [in] long left, [in] long bottom, [in] long right, [out, retval] long *status);
+		[id(2), helpstring("method Cleanup")] HRESULT Cleanup([in] BSTR scrap, [out, retval] long *status);
+		[id(3), helpstring("method Resolution")] HRESULT Resolution([out, retval] long *number);
+		[id(4), helpstring("method Top")] HRESULT Top([out, retval] long *number);
+		[id(5), helpstring("method Left")] HRESULT Left([out, retval] long *number);
+		[id(6), helpstring("method Bottom")] HRESULT Bottom([out, retval] long *number);
+		[id(7), helpstring("method Right")] HRESULT Right([out, retval] long *number);
+	};
+
+[
+	uuid(B5679FC4-1605-4726-8202-8611C59456D2),
+	version(1.0),
+	helpstring("Test 1.0 Type Library")
+]
+library TESTLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(29EAFE44-6650-4AC3-9772-B29C821CD6F7),
+		helpstring("unigrafwd Class")
+	]
+	coclass unigrafwd
+	{
+		[default] interface Iunigrafwd;
+	};
+};

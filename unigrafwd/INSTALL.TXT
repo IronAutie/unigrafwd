@@ -1,0 +1,26 @@
+INSTALL STEPS:
+
+1) This software is known to work on Win32 related systems only.
+
+2) This software is known to work with Word 97 and Word 2003
+
+3) Launch Visual C++ upon the file unigrafwd.dsp
+
+4) Execute menu command Build\build unigrafwd.dll
+
+5) Copy the dll from Debug\unigrafwd.dll to folder
+   C:\Program Files\Common Files\Microsoft Shared\Grphflt
+
+6) Using Regedit:
+
+   a) Add new key UGF under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Shared Tools\Graphics Filters\Import
+   b) Add string Extensions under key UGF with value ugf
+   c) Add string Name under key UGF with value Universal Graphics
+   d) Add string Path under key UGF with value C:\Program Files\Common Files\Microsoft Shared\Grphflt\unigrafwd.dll
+
+   NOTE:  additional extensions can be associated with this filter by
+          adding such to string Extensions, be sure to seperate all 
+		  extensions with single space character.
+		  
+ 
+
